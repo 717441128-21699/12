@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   Plus,
   Edit2,
@@ -20,6 +20,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { useManagerStore } from '@/store/managerStore';
+import { useCoachStore } from '@/store/coachStore';
 import { cn } from '@/lib/utils';
 import type { CourseCategory, PricingRule, MemberLevel } from '@/types';
 
@@ -58,7 +59,14 @@ const colorOptions = [
 ];
 
 export default function ManagerCourses() {
-  const { categories, pricingRules, upsertCategory, deleteCategory, updatePricingRules } = useManagerStore();
+  const { categories, pricingRules, upsertCategory, deleteCategory, updatePricingRules, fetchCategories, fetchPricingRules } = useManagerStore();
+  const { fetchCourses } = useCoachStore();
+
+  useEffect(() => {
+    fetchCategories();
+    fetchPricingRules();
+    fetchCourses();
+  }, []);
 
   const [activeTab, setActiveTab] = useState<'categories' | 'pricing'>('categories');
   const [showCategoryModal, setShowCategoryModal] = useState(false);

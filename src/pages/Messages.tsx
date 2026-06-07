@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   CalendarCheck,
   Clock,
@@ -100,10 +100,14 @@ function getCategoryIcon(type: MessageType) {
 }
 
 export default function Messages() {
-  const { messages, markRead, markAllRead } = useMessageStore();
+  const { messages, markRead, markAllRead, fetchMessages } = useMessageStore();
   const { currentUser } = useAuthStore();
   const [activeCategory, setActiveCategory] = useState<MessageCategory>('all');
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
+
+  useEffect(() => {
+    fetchMessages();
+  }, []);
 
   const userMessages = useMemo(() => {
     if (!currentUser) return [];
@@ -138,9 +142,9 @@ export default function Messages() {
     return counts;
   }, [userMessages]);
 
-  const handleSelectMessage = (msg: Message) => {
+  const handleSelectMessage = async (msg: Message) => {
     if (!msg.read) {
-      markRead(msg.id);
+      await markRead(msg.id);
     }
     setSelectedMessage(msg);
   };
@@ -255,7 +259,7 @@ export default function Messages() {
           </div>
           {categoryUnreadCounts.all > 0 && (
             <button
-              onClick={() => currentUser && markAllRead(currentUser.id)}
+              onClick={() => markAllRead()}
               className="flex items-center gap-1 rounded-lg px-2 py-1 text-xs text-gray-500 hover:bg-gray-100"
             >
               <CheckCheck className="h-3.5 w-3.5" />

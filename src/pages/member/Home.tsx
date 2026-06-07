@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import {
   Activity,
   Scale,
@@ -35,6 +35,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useMemberStore } from '@/store/memberStore';
 import { useCoachStore } from '@/store/coachStore';
 import { useManagerStore } from '@/store/managerStore';
+import { useMessageStore } from '@/store/messageStore';
 import type { Course, CourseCategory } from '@/types';
 import { cn } from '@/lib/utils';
 import { mockUsers } from '@/utils/mockData';
@@ -74,9 +75,16 @@ const COLORS = ['#FF5E1A', '#333333'];
 
 export default function Home() {
   const currentUser = useAuthStore((s) => s.currentUser);
-  const { bodyData, dietPlan, bookings, trainingPlan } = useMemberStore();
+  const { bodyData, dietPlan, bookings, trainingPlan, fetchBookings, fetchWaitingQueues } = useMemberStore();
   const { courses } = useCoachStore();
   const { categories } = useManagerStore();
+  const { fetchMessages } = useMessageStore();
+
+  useEffect(() => {
+    fetchBookings();
+    fetchWaitingQueues();
+    fetchMessages();
+  }, []);
 
   const memberLevel = currentUser?.memberLevel || currentUser?.level || 'normal';
 

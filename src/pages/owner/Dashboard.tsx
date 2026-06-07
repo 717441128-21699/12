@@ -47,14 +47,16 @@ function getTrendColor(current: number, benchmark: number) {
 }
 
 export default function OwnerDashboard() {
-  const { stores, fetchMetrics, coachRankings, exportReport } = useOwnerStore();
+  const { stores, fetchMetrics, coachRankings, exportReport, fetchStores, fetchRankings } = useOwnerStore();
   const { currentUser } = useAuthStore();
   const [selectedMonth, setSelectedMonth] = useState('2026-06');
   const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
+    fetchStores();
+    fetchRankings();
     fetchMetrics(selectedMonth);
-  }, [selectedMonth, fetchMetrics]);
+  }, [selectedMonth, fetchStores, fetchRankings, fetchMetrics]);
 
   const metrics = useMemo(
     () => useOwnerStore.getState().metrics.filter((m) => m.month === selectedMonth),

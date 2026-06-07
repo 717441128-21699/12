@@ -1,0 +1,28 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_1 = __importDefault(require("./auth"));
+const categories_1 = __importDefault(require("./categories"));
+const courses_1 = __importDefault(require("./courses"));
+const stores_1 = __importDefault(require("./stores"));
+const bookings_1 = __importDefault(require("./bookings"));
+const waiting_1 = __importDefault(require("./waiting"));
+const refunds_1 = __importDefault(require("./refunds"));
+const messages_1 = __importDefault(require("./messages"));
+const stats_1 = __importDefault(require("./stats"));
+const pricing_1 = __importDefault(require("./pricing"));
+const router = (0, express_1.Router)();
+router.use('/auth', auth_1.default);
+router.use('/categories', categories_1.default);
+router.use('/courses', courses_1.default);
+router.use('/stores', stores_1.default);
+router.use('/bookings', bookings_1.default);
+router.use('/waiting', waiting_1.default);
+router.use('/refunds', refunds_1.default);
+router.use('/messages', messages_1.default);
+router.use('/stats', stats_1.default);
+router.use('/pricing', pricing_1.default);
+exports.default = router;

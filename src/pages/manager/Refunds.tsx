@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   RefreshCw,
   Check,
@@ -38,8 +38,12 @@ const statusConfig: Record<RefundStatus, { label: string; className: string; ico
 };
 
 export default function ManagerRefunds() {
-  const { refundRequests, reviewRefund } = useManagerStore();
+  const { refundRequests, reviewRefund, fetchRefundRequests } = useManagerStore();
   const currentUser = useAuthStore((s) => s.currentUser);
+
+  useEffect(() => {
+    fetchRefundRequests();
+  }, []);
 
   const [statusFilter, setStatusFilter] = useState<RefundStatus | 'all'>('all');
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);

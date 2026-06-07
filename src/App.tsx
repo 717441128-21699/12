@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
@@ -12,8 +13,18 @@ import Refunds from '@/pages/manager/Refunds';
 import OwnerDashboard from '@/pages/owner/Dashboard';
 import RequireAuth from '@/components/RequireAuth';
 import { Layout } from '@/components/layout/Layout';
+import { useAuthStore } from '@/store/authStore';
+import { TOKEN_KEY } from '@/api/client';
 
 export default function App() {
+  const fetchMe = useAuthStore((s) => s.fetchMe);
+
+  useEffect(() => {
+    if (localStorage.getItem(TOKEN_KEY)) {
+      fetchMe();
+    }
+  }, [fetchMe]);
+
   return (
     <Router>
       <Routes>

@@ -1,0 +1,707 @@
+{
+  "stores": [
+    {
+      "id": "s1",
+      "name": "FitPro 旗舰店",
+      "address": "南京路88号",
+      "city": "上海"
+    },
+    {
+      "id": "s2",
+      "name": "FitPro 朝阳店",
+      "address": "朝阳路168号",
+      "city": "北京"
+    },
+    {
+      "id": "s3",
+      "name": "FitPro 天河店",
+      "address": "天河路200号",
+      "city": "广州"
+    },
+    {
+      "id": "s4",
+      "name": "FitPro 南山店",
+      "address": "科技园路50号",
+      "city": "深圳"
+    }
+  ],
+  "users": [
+    {
+      "id": "m1",
+      "role": "member",
+      "name": "张小明",
+      "phone": "13800000001",
+      "password_hash": "$2a$10$JvaXHsZahADOO4yYftu9LOBzOHOoqRE/InZevwiqdKHTKYKwFw.Yq",
+      "store_id": "s1",
+      "member_level": "gold",
+      "created_at": "2026-06-07T02:50:19.954Z"
+    },
+    {
+      "id": "m2",
+      "role": "member",
+      "name": "李思思",
+      "phone": "13800000002",
+      "password_hash": "$2a$10$JvaXHsZahADOO4yYftu9LOBzOHOoqRE/InZevwiqdKHTKYKwFw.Yq",
+      "store_id": "s1",
+      "member_level": "silver",
+      "created_at": "2026-06-07T02:50:19.955Z"
+    },
+    {
+      "id": "m3",
+      "role": "member",
+      "name": "王大力",
+      "phone": "13800000003",
+      "password_hash": "$2a$10$JvaXHsZahADOO4yYftu9LOBzOHOoqRE/InZevwiqdKHTKYKwFw.Yq",
+      "store_id": "s2",
+      "member_level": "diamond",
+      "created_at": "2026-06-07T02:50:19.955Z"
+    },
+    {
+      "id": "m4",
+      "role": "member",
+      "name": "赵小美",
+      "phone": "13800000004",
+      "password_hash": "$2a$10$JvaXHsZahADOO4yYftu9LOBzOHOoqRE/InZevwiqdKHTKYKwFw.Yq",
+      "store_id": "s3",
+      "member_level": "normal",
+      "created_at": "2026-06-07T02:50:19.956Z"
+    },
+    {
+      "id": "m5",
+      "role": "member",
+      "name": "刘强",
+      "phone": "13800000005",
+      "password_hash": "$2a$10$JvaXHsZahADOO4yYftu9LOBzOHOoqRE/InZevwiqdKHTKYKwFw.Yq",
+      "store_id": "s4",
+      "member_level": "gold",
+      "created_at": "2026-06-07T02:50:19.957Z"
+    },
+    {
+      "id": "m6",
+      "role": "member",
+      "name": "陈芳",
+      "phone": "13800000006",
+      "password_hash": "$2a$10$JvaXHsZahADOO4yYftu9LOBzOHOoqRE/InZevwiqdKHTKYKwFw.Yq",
+      "store_id": "s2",
+      "member_level": "silver",
+      "created_at": "2026-06-07T02:50:19.957Z"
+    },
+    {
+      "id": "m7",
+      "role": "member",
+      "name": "周杰",
+      "phone": "13800000007",
+      "password_hash": "$2a$10$JvaXHsZahADOO4yYftu9LOBzOHOoqRE/InZevwiqdKHTKYKwFw.Yq",
+      "store_id": "s3",
+      "member_level": "normal",
+      "created_at": "2026-06-07T02:50:19.958Z"
+    },
+    {
+      "id": "coach1",
+      "role": "coach",
+      "name": "陈教练",
+      "phone": "13900000001",
+      "password_hash": "$2a$10$JvaXHsZahADOO4yYftu9LOBzOHOoqRE/InZevwiqdKHTKYKwFw.Yq",
+      "store_id": "s1",
+      "member_level": null,
+      "created_at": "2026-06-07T02:50:19.959Z"
+    },
+    {
+      "id": "coach2",
+      "role": "coach",
+      "name": "林教练",
+      "phone": "13900000002",
+      "password_hash": "$2a$10$JvaXHsZahADOO4yYftu9LOBzOHOoqRE/InZevwiqdKHTKYKwFw.Yq",
+      "store_id": "s1",
+      "member_level": null,
+      "created_at": "2026-06-07T02:50:19.960Z"
+    },
+    {
+      "id": "coach3",
+      "role": "coach",
+      "name": "黄教练",
+      "phone": "13900000003",
+      "password_hash": "$2a$10$JvaXHsZahADOO4yYftu9LOBzOHOoqRE/InZevwiqdKHTKYKwFw.Yq",
+      "store_id": "s2",
+      "member_level": null,
+      "created_at": "2026-06-07T02:50:19.960Z"
+    },
+    {
+      "id": "manager1",
+      "role": "manager",
+      "name": "运营经理-孙",
+      "phone": "13700000001",
+      "password_hash": "$2a$10$JvaXHsZahADOO4yYftu9LOBzOHOoqRE/InZevwiqdKHTKYKwFw.Yq",
+      "store_id": null,
+      "member_level": null,
+      "created_at": "2026-06-07T02:50:19.961Z"
+    },
+    {
+      "id": "owner1",
+      "role": "owner",
+      "name": "店长-钱",
+      "phone": "13600000001",
+      "password_hash": "$2a$10$JvaXHsZahADOO4yYftu9LOBzOHOoqRE/InZevwiqdKHTKYKwFw.Yq",
+      "store_id": null,
+      "member_level": null,
+      "created_at": "2026-06-07T02:50:19.962Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "c1",
+      "name": "动感单车",
+      "icon": "bike",
+      "description": "高强度有氧燃脂",
+      "base_price": 88,
+      "color": "#FF5E1A"
+    },
+    {
+      "id": "c2",
+      "name": "瑜伽",
+      "icon": "flower2",
+      "description": "身心放松塑形",
+      "base_price": 128,
+      "color": "#00C48C"
+    },
+    {
+      "id": "c3",
+      "name": "力量训练",
+      "icon": "dumbbell",
+      "description": "肌群强化训练",
+      "base_price": 158,
+      "color": "#3B82F6"
+    },
+    {
+      "id": "c4",
+      "name": "HIIT",
+      "icon": "flame",
+      "description": "高强度间歇训练",
+      "base_price": 98,
+      "color": "#FF4757"
+    },
+    {
+      "id": "c5",
+      "name": "普拉提",
+      "icon": "activity",
+      "description": "核心控制力训练",
+      "base_price": 148,
+      "color": "#A855F7"
+    }
+  ],
+  "pricing_rules": [
+    {
+      "id": "pr1",
+      "level": "normal",
+      "level_name": "普通会员",
+      "discount_rate": 1,
+      "single_price": 0,
+      "monthly_price": 399,
+      "quarterly_price": 999,
+      "yearly_price": 3599
+    },
+    {
+      "id": "pr2",
+      "level": "silver",
+      "level_name": "银卡会员",
+      "discount_rate": 0.9,
+      "single_price": 0,
+      "monthly_price": 599,
+      "quarterly_price": 1499,
+      "yearly_price": 5399
+    },
+    {
+      "id": "pr3",
+      "level": "gold",
+      "level_name": "金卡会员",
+      "discount_rate": 0.8,
+      "single_price": 0,
+      "monthly_price": 899,
+      "quarterly_price": 2299,
+      "yearly_price": 8199
+    },
+    {
+      "id": "pr4",
+      "level": "diamond",
+      "level_name": "钻石会员",
+      "discount_rate": 0.65,
+      "single_price": 0,
+      "monthly_price": 1499,
+      "quarterly_price": 3899,
+      "yearly_price": 13999
+    }
+  ],
+  "courses": [
+    {
+      "id": "course1",
+      "category_id": "c1",
+      "coach_id": "coach1",
+      "store_id": "s1",
+      "title": "晨间燃脂动感单车",
+      "date": "2026-06-08",
+      "start_time": "07:00",
+      "end_time": "08:00",
+      "capacity": 20,
+      "booked_count": 15,
+      "price": 88,
+      "status": "scheduled",
+      "description": "清晨高强度有氧训练，快速燃烧脂肪，开启活力一天。",
+      "created_at": "2026-06-07T02:50:19.962Z"
+    },
+    {
+      "id": "course2",
+      "category_id": "c2",
+      "coach_id": "coach2",
+      "store_id": "s1",
+      "title": "午间舒缓瑜伽",
+      "date": "2026-06-08",
+      "start_time": "12:30",
+      "end_time": "13:30",
+      "capacity": 15,
+      "booked_count": 15,
+      "price": 128,
+      "status": "scheduled",
+      "description": "工作间隙放松身心，舒缓肩颈压力，提升专注力。",
+      "created_at": "2026-06-07T02:50:19.963Z"
+    },
+    {
+      "id": "course3",
+      "category_id": "c3",
+      "coach_id": "coach1",
+      "store_id": "s1",
+      "title": "下肢力量强化",
+      "date": "2026-06-08",
+      "start_time": "18:30",
+      "end_time": "19:30",
+      "capacity": 12,
+      "booked_count": 8,
+      "price": 158,
+      "status": "scheduled",
+      "description": "深蹲、硬拉、箭步蹲，全方位打造强壮下肢。",
+      "created_at": "2026-06-07T02:50:19.964Z"
+    },
+    {
+      "id": "course4",
+      "category_id": "c4",
+      "coach_id": "coach3",
+      "store_id": "s2",
+      "title": "HIIT燃脂挑战",
+      "date": "2026-06-09",
+      "start_time": "19:00",
+      "end_time": "20:00",
+      "capacity": 25,
+      "booked_count": 20,
+      "price": 98,
+      "status": "scheduled",
+      "description": "45分钟高强度间歇训练，挑战你的极限。",
+      "created_at": "2026-06-07T02:50:19.964Z"
+    },
+    {
+      "id": "course5",
+      "category_id": "c5",
+      "coach_id": "coach2",
+      "store_id": "s3",
+      "title": "普拉提核心训练",
+      "date": "2026-06-09",
+      "start_time": "10:00",
+      "end_time": "11:00",
+      "capacity": 10,
+      "booked_count": 6,
+      "price": 148,
+      "status": "scheduled",
+      "description": "强化核心肌群，改善体态，提升身体控制能力。",
+      "created_at": "2026-06-07T02:50:19.965Z"
+    },
+    {
+      "id": "course6",
+      "category_id": "c2",
+      "coach_id": "coach3",
+      "store_id": "s4",
+      "title": "流瑜伽进阶",
+      "date": "2026-06-10",
+      "start_time": "09:00",
+      "end_time": "10:30",
+      "capacity": 12,
+      "booked_count": 5,
+      "price": 128,
+      "status": "scheduled",
+      "description": "连贯体式流动，配合呼吸，深度拉伸与力量结合。",
+      "created_at": "2026-06-07T02:50:19.966Z"
+    },
+    {
+      "id": "course7",
+      "category_id": "c3",
+      "coach_id": "coach2",
+      "store_id": "s1",
+      "title": "上肢力量训练",
+      "date": "2026-06-07",
+      "start_time": "18:00",
+      "end_time": "19:00",
+      "capacity": 12,
+      "booked_count": 11,
+      "price": 158,
+      "status": "ongoing",
+      "description": "胸部、背部、手臂全方位训练。",
+      "created_at": "2026-06-07T02:50:19.967Z"
+    },
+    {
+      "id": "course8",
+      "category_id": "c1",
+      "coach_id": "coach3",
+      "store_id": "s2",
+      "title": "动感单车竞速",
+      "date": "2026-06-06",
+      "start_time": "19:00",
+      "end_time": "20:00",
+      "capacity": 20,
+      "booked_count": 18,
+      "price": 88,
+      "status": "completed",
+      "description": "模拟山地竞速，高强度心肺训练。",
+      "created_at": "2026-06-07T02:50:19.967Z"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "b1",
+      "member_id": "m1",
+      "course_id": "course1",
+      "status": "booked",
+      "price": 88,
+      "discount_rate": 0.8,
+      "actual_price": 70,
+      "attendance": null,
+      "training_report": null,
+      "booked_at": "2026-06-05T02:50:19.968Z"
+    },
+    {
+      "id": "b2",
+      "member_id": "m1",
+      "course_id": "course3",
+      "status": "booked",
+      "price": 158,
+      "discount_rate": 0.8,
+      "actual_price": 126,
+      "attendance": null,
+      "training_report": null,
+      "booked_at": "2026-06-05T02:50:19.968Z"
+    },
+    {
+      "id": "b3",
+      "member_id": "m2",
+      "course_id": "course2",
+      "status": "waiting",
+      "price": 128,
+      "discount_rate": 0.9,
+      "actual_price": 115,
+      "attendance": null,
+      "training_report": null,
+      "booked_at": "2026-06-06T02:50:19.968Z"
+    },
+    {
+      "id": "b4",
+      "member_id": "m3",
+      "course_id": "course4",
+      "status": "booked",
+      "price": 98,
+      "discount_rate": 0.65,
+      "actual_price": 64,
+      "attendance": null,
+      "training_report": null,
+      "booked_at": "2026-06-06T02:50:19.968Z"
+    },
+    {
+      "id": "b5",
+      "member_id": "m4",
+      "course_id": "course5",
+      "status": "booked",
+      "price": 148,
+      "discount_rate": 1,
+      "actual_price": 148,
+      "attendance": null,
+      "training_report": null,
+      "booked_at": "2026-06-06T02:50:19.968Z"
+    },
+    {
+      "id": "b6",
+      "member_id": "m1",
+      "course_id": "course8",
+      "status": "completed",
+      "price": 88,
+      "discount_rate": 0.8,
+      "actual_price": 70,
+      "attendance": 1,
+      "training_report": "本节课完成度良好，心率保持在燃脂区间，建议下次增加阻力档位。",
+      "booked_at": "2026-06-04T02:50:19.968Z"
+    },
+    {
+      "id": "b7",
+      "member_id": "m5",
+      "course_id": "course7",
+      "status": "booked",
+      "price": 158,
+      "discount_rate": 0.8,
+      "actual_price": 126,
+      "attendance": null,
+      "training_report": null,
+      "booked_at": "2026-06-06T02:50:19.968Z"
+    },
+    {
+      "id": "b8",
+      "member_id": "m6",
+      "course_id": "course4",
+      "status": "booked",
+      "price": 98,
+      "discount_rate": 0.9,
+      "actual_price": 88,
+      "attendance": null,
+      "training_report": null,
+      "booked_at": "2026-06-06T02:50:19.968Z"
+    },
+    {
+      "id": "mq37f67awq4fye",
+      "member_id": "m1",
+      "course_id": "course7",
+      "status": "booked",
+      "price": 158,
+      "discount_rate": 0.8,
+      "actual_price": 126,
+      "attendance": "2026-06-07T03:10:14.566Z",
+      "training_report": null,
+      "booked_at": null
+    }
+  ],
+  "waiting_queue": [
+    {
+      "id": "w1",
+      "course_id": "course2",
+      "member_id": "m1",
+      "position": 1,
+      "joined_at": "2026-06-05T02:50:19.973Z"
+    },
+    {
+      "id": "w2",
+      "course_id": "course2",
+      "member_id": "m2",
+      "position": 2,
+      "joined_at": "2026-06-06T02:50:19.973Z"
+    },
+    {
+      "id": "w3",
+      "course_id": "course2",
+      "member_id": "m6",
+      "position": 3,
+      "joined_at": "2026-06-06T02:50:19.973Z"
+    },
+    {
+      "id": "w4",
+      "course_id": "course4",
+      "member_id": "m7",
+      "position": 1,
+      "joined_at": "2026-06-06T02:50:19.973Z"
+    }
+  ],
+  "refunds": [
+    {
+      "id": "r1",
+      "booking_id": "b1",
+      "member_id": "m1",
+      "total_sessions": 20,
+      "completed_sessions": 5,
+      "refund_ratio": 0.75,
+      "paid_amount": 1400,
+      "refund_amount": 1050,
+      "status": "pending",
+      "reason": "工作调动，无法继续上课",
+      "created_at": "2026-06-01T02:50:19.976Z",
+      "reviewed_at": null,
+      "reviewer_id": null
+    },
+    {
+      "id": "r2",
+      "booking_id": "b2",
+      "member_id": "m2",
+      "total_sessions": 12,
+      "completed_sessions": 2,
+      "refund_ratio": 0.83,
+      "paid_amount": 1512,
+      "refund_amount": 1255,
+      "status": "pending",
+      "reason": "身体原因，医生建议休息",
+      "created_at": "2026-06-03T02:50:19.976Z",
+      "reviewed_at": null,
+      "reviewer_id": null
+    },
+    {
+      "id": "r3",
+      "booking_id": "b6",
+      "member_id": "m1",
+      "total_sessions": 10,
+      "completed_sessions": 3,
+      "refund_ratio": 0.7,
+      "paid_amount": 1599,
+      "refund_amount": 1119,
+      "status": "approved",
+      "reason": "搬家距离太远",
+      "created_at": "2026-05-23T02:50:19.976Z",
+      "reviewed_at": "2026-05-26T02:50:19.976Z",
+      "reviewer_id": "manager1"
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg1",
+      "user_id": "m1",
+      "role": "member",
+      "type": "booking_success",
+      "title": "预约成功",
+      "content": "您已成功预约「晨间燃脂动感单车」课程，上课时间 2026-06-08 07:00-08:00，请准时到店。",
+      "related_id": "b1",
+      "related_type": "booking",
+      "has_voucher": 1,
+      "voucher_data": "{\"type\":\"booking\",\"bookingId\":\"b1\",\"amount\":70,\"issuedAt\":\"2026-06-07T02:50:19.978Z\",\"code\":\"BK1780800619978212\"}",
+      "read": 0,
+      "created_at": "2026-06-05T02:50:19.978Z"
+    },
+    {
+      "id": "msg2",
+      "user_id": "m1",
+      "role": "member",
+      "type": "course_reminder",
+      "title": "课程提醒",
+      "content": "您预约的「下肢力量强化」课程将在2小时后开始，请提前15分钟到店热身。",
+      "related_id": "course3",
+      "related_type": "course",
+      "has_voucher": 0,
+      "voucher_data": null,
+      "read": 0,
+      "created_at": "2026-06-06T02:50:19.978Z"
+    },
+    {
+      "id": "msg3",
+      "user_id": "m2",
+      "role": "member",
+      "type": "booking_success",
+      "title": "候补排队中",
+      "content": "「午间舒缓瑜伽」课程已满员，您已进入候补队列，当前排位第2位，有空位将自动补位。",
+      "related_id": "b3",
+      "related_type": "booking",
+      "has_voucher": 0,
+      "voucher_data": null,
+      "read": 1,
+      "created_at": "2026-06-06T02:50:19.978Z"
+    },
+    {
+      "id": "msg4",
+      "user_id": "m1",
+      "role": "member",
+      "type": "attendance_record",
+      "title": "出勤记录已生成",
+      "content": "您的「动感单车竞速」课程出勤已记录，教练已上传训练报告，请查收。",
+      "related_id": "b6",
+      "related_type": "booking",
+      "has_voucher": 1,
+      "voucher_data": "{\"type\":\"attendance\",\"bookingId\":\"b6\",\"issuedAt\":\"2026-06-06T02:50:19.978Z\",\"code\":\"AT20260606001\"}",
+      "read": 1,
+      "created_at": "2026-06-06T02:50:19.978Z"
+    },
+    {
+      "id": "msg5",
+      "user_id": "m3",
+      "role": "member",
+      "type": "booking_success",
+      "title": "预约成功",
+      "content": "您已成功预约「HIIT燃脂挑战」课程，上课时间请查看课程详情。",
+      "related_id": "b4",
+      "related_type": "booking",
+      "has_voucher": 1,
+      "voucher_data": "{\"type\":\"booking\",\"bookingId\":\"b4\",\"amount\":64,\"issuedAt\":\"2026-06-07T02:50:19.978Z\",\"code\":\"BK1780800619978570\"}",
+      "read": 0,
+      "created_at": "2026-06-06T02:50:19.978Z"
+    },
+    {
+      "id": "msg6",
+      "user_id": "manager1",
+      "role": "manager",
+      "type": "refund_request",
+      "title": "新退款申请待审批",
+      "content": "会员张小明提交了退款申请，金额 ¥1050，请及时处理。",
+      "related_id": "r1",
+      "related_type": "refund",
+      "has_voucher": 0,
+      "voucher_data": null,
+      "read": 0,
+      "created_at": "2026-06-06T02:50:19.978Z"
+    },
+    {
+      "id": "msg7",
+      "user_id": "coach1",
+      "role": "coach",
+      "type": "course_reminder",
+      "title": "课程即将开始",
+      "content": "您的「下肢力量强化」课程将在今天 18:30 开始，请提前准备。",
+      "related_id": "course3",
+      "related_type": "course",
+      "has_voucher": 0,
+      "voucher_data": null,
+      "read": 0,
+      "created_at": "2026-06-06T02:50:19.978Z"
+    },
+    {
+      "id": "msg8",
+      "user_id": "owner1",
+      "role": "owner",
+      "type": "attendance_record",
+      "title": "月度运营数据已更新",
+      "content": "6月门店运营数据看板已更新，请注意查看。",
+      "related_id": null,
+      "related_type": null,
+      "has_voucher": 0,
+      "voucher_data": null,
+      "read": 0,
+      "created_at": "2026-06-06T02:50:19.978Z"
+    },
+    {
+      "id": "msg9",
+      "user_id": "m1",
+      "role": "member",
+      "type": "refund_request",
+      "title": "退款申请已提交",
+      "content": "您已提交退款申请，应退金额 ¥1050，请等待运营审核。",
+      "related_id": "r1",
+      "related_type": "refund",
+      "has_voucher": 0,
+      "voucher_data": null,
+      "read": 1,
+      "created_at": "2026-06-01T02:50:19.978Z"
+    },
+    {
+      "id": "msg10",
+      "user_id": "m6",
+      "role": "member",
+      "type": "waiting_promoted",
+      "title": "候补补位成功",
+      "content": "恭喜您从候补队列中补位成功，已为您预约课程。",
+      "related_id": "b8",
+      "related_type": "booking",
+      "has_voucher": 1,
+      "voucher_data": "{\"type\":\"booking\",\"bookingId\":\"b8\",\"issuedAt\":\"2026-06-07T02:50:19.978Z\",\"code\":\"BK1780800619978191\"}",
+      "read": 0,
+      "created_at": "2026-06-06T02:50:19.978Z"
+    },
+    {
+      "id": "mq37f67czeellr",
+      "user_id": "m1",
+      "role": "member",
+      "type": "booking_success",
+      "title": "预约成功",
+      "content": "您已成功预约「上肢力量训练」课程，上课时间 2026-06-07 18:00-19:00，请准时到店。",
+      "related_id": "mq37f67awq4fye",
+      "related_type": "booking",
+      "has_voucher": 1,
+      "voucher_data": "{\"type\":\"booking\",\"bookingId\":\"mq37f67awq4fye\",\"amount\":126,\"issuedAt\":\"2026-06-07T03:10:14.568Z\",\"code\":\"BK1780801814568791\"}",
+      "read": "2026-06-07T03:10:14.568Z",
+      "created_at": null
+    }
+  ]
+}

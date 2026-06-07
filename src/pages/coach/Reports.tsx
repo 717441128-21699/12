@@ -79,8 +79,8 @@ const mockTrendData = [
 ];
 
 export default function CoachReports() {
-  const { courses, uploadReport, calculateConsumptionRate } = useCoachStore();
-  const { bookings } = useMemberStore();
+  const { courses, uploadReport, calculateConsumptionRate, fetchStats, fetchCourses } = useCoachStore();
+  const { bookings, fetchBookings } = useMemberStore();
   const currentUser = useAuthStore((s) => s.currentUser);
   const coachId = currentUser?.id ?? 'coach1';
 
@@ -138,9 +138,9 @@ export default function CoachReports() {
     return course?.title ?? courseId;
   };
 
-  const handleUploadReport = () => {
+  const handleUploadReport = async () => {
     if (!selectedBooking || !reportText.trim()) return;
-    const result = uploadReport(selectedBooking.id, reportText.trim());
+    const result = await uploadReport(selectedBooking.courseId, selectedBooking.id, reportText.trim());
     if (result) {
       setShowUploadModal(false);
       setSelectedBooking(null);
@@ -149,8 +149,10 @@ export default function CoachReports() {
   };
 
   useEffect(() => {
-    calculateConsumptionRate(coachId, selectedMonth);
-  }, [calculateConsumptionRate, coachId, selectedMonth]);
+    fetchCourses();
+    fetchStats(coachId, selectedMonth);
+    fetchBookings();
+  }, [fetchCourses, fetchStats, fetchBookings, coachId, selectedMonth]);
 
   return (
     <div className="min-h-screen bg-background text-foreground p-6">

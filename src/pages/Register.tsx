@@ -36,7 +36,7 @@ export default function Register() {
 
   const selectedLevel = LEVEL_OPTIONS.find((l) => l.value === level)!;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -62,18 +62,23 @@ export default function Register() {
     }
 
     setLoading(true);
-    setTimeout(() => {
-      const user = register({
+    try {
+      const user = await register({
         name: name.trim(),
         phone: phone.trim(),
         password,
-        level,
+        memberLevel: level,
       });
       setLoading(false);
       if (user) {
         navigate('/member', { replace: true });
+      } else {
+        setError('注册失败，请重试');
       }
-    }, 500);
+    } catch {
+      setLoading(false);
+      setError('注册失败，请重试');
+    }
   };
 
   return (

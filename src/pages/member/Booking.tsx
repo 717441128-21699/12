@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import {
   Search,
   Calendar,
@@ -42,8 +42,13 @@ function getCategoryIcon(categoryId: string, categories: CourseCategory[]) {
 export default function Booking() {
   const currentUser = useAuthStore((s) => s.currentUser);
   const { bookings, waitingQueues, bookCourse, joinWaiting } = useMemberStore();
-  const { courses } = useCoachStore();
-  const { categories } = useManagerStore();
+  const { courses, fetchCourses } = useCoachStore();
+  const { categories, fetchCategories } = useManagerStore();
+
+  useEffect(() => {
+    fetchCourses();
+    fetchCategories();
+  }, []);
 
   const [selectedDate, setSelectedDate] = useState<string>('all');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -108,9 +113,14 @@ export default function Booking() {
     );
     if (booking) return booking.status;
     const wq = waitingQueues.find((wq) => wq.courseId === courseId);
-    const inQueue = wq?.members.findIndex((m) => m.memberId === currentUser.id);
-    if (inQueue !== undefined && inQueue >= 0) {
-      return { type: 'waiting' as const, position: inQueue + 1 };
+    if (wq) {
+      if (typeof wq.myPosition === 'number' && wq.myPosition >= 1) {
+        return { type: 'waiting' as const, position: wq.myPosition };
+      }
+      if (wq.members && Array.isArray(wq.members)) {
+        const idx = wq.members.findIndex((m: any) => m.memberId === currentUser.id);
+        if (idx >= 0) return { type: 'waiting' as const, position: idx + 1 };
+      }
     }
     return null;
   };
@@ -274,7 +284,7 @@ export default function Booking() {
               const isFull = course.bookedCount >= course.capacity;
               const bookingStatus = getMyBookingStatus(course.id);
               const isBooked = bookingStatus === 'booked' || bookingStatus === 'completed';
-              const isWaiting = typeof bookingStatus === 'object' && bookingStatus.type === 'waiting';
+              const isWaiting = bookingStatus !== null && typeof bookingStatus === 'object' && bookingStatus.type === 'waiting';
 
               return (
                 <div

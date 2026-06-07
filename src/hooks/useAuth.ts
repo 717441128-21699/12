@@ -7,7 +7,7 @@ interface UseAuthReturn {
   user: SafeUser | null;
   isAuthenticated: boolean;
   role: UserRole | null;
-  login: (role: UserRole, phone: string, password?: string) => boolean;
+  login: (role: UserRole, phone: string, password?: string) => Promise<boolean>;
   logout: () => void;
 }
 

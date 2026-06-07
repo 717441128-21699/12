@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import {
   Calendar,
   Clock,
@@ -53,9 +53,14 @@ const tabs: { key: TabKey; label: string; icon: React.ComponentType<{ className?
 
 export default function MyBookings() {
   const currentUser = useAuthStore((s) => s.currentUser);
-  const { bookings, waitingQueues, cancelBooking, applyRefund, refundRequests } = useMemberStore();
+  const { bookings, waitingQueues, cancelBooking, applyRefund, refundRequests, fetchBookings, fetchWaitingQueues } = useMemberStore();
   const { courses } = useCoachStore();
   const { categories } = useManagerStore();
+
+  useEffect(() => {
+    fetchBookings();
+    fetchWaitingQueues();
+  }, []);
 
   const [activeTab, setActiveTab] = useState<TabKey>('booked');
   const [cancelModal, setCancelModal] = useState<{ booking: Booking; course: Course } | null>(null);
@@ -77,8 +82,16 @@ export default function MyBookings() {
   const myWaitingQueues = useMemo(() => {
     if (!currentUser) return [];
     return waitingQueues
-      .map((wq) => {
-        const position = wq.members.findIndex((m) => m.memberId === currentUser.id);
+      .map((wq: any) => {
+        let position = -1;
+        let joinedAt: string | undefined;
+        if (typeof wq.myPosition === 'number' && wq.myPosition >= 1) {
+          position = wq.myPosition - 1;
+          joinedAt = wq.joinedAt;
+        } else if (wq.members && Array.isArray(wq.members)) {
+          position = wq.members.findIndex((m: any) => m.memberId === currentUser.id);
+          if (position >= 0) joinedAt = wq.members[position].joinedAt;
+        }
         if (position < 0) return null;
         const course = courses.find((c) => c.id === wq.courseId);
         if (!course) return null;
@@ -86,7 +99,7 @@ export default function MyBookings() {
           ...wq,
           position: position + 1,
           course,
-          joinedAt: wq.members[position].joinedAt,
+          joinedAt: joinedAt || new Date().toISOString(),
         };
       })
       .filter(Boolean) as Array<{ courseId: string; members: unknown[]; position: number; course: Course; joinedAt: string }>;
@@ -125,21 +138,25 @@ export default function MyBookings() {
   const handleApplyRefund = async () => {
     if (!refundModal || !refundReason.trim()) return;
     setIsProcessing(true);
-    await new Promise((r) => setTimeout(r, 500));
-    const result = applyRefund(
-      refundModal.booking.id,
-      refundReason.trim(),
-      totalSessions,
-      completedSessions
-    );
-    setIsProcessing(false);
-    if (result) {
-      setRefundModal(null);
-      setRefundReason('');
-      setTotalSessions(1);
-      setCompletedSessions(0);
-      showToast('success', `退款申请已提交，应退 ¥${result.refundAmount.toFixed(2)}`);
-    } else {
+    try {
+      const result = await applyRefund(
+        refundModal.booking.id,
+        refundReason.trim(),
+        totalSessions,
+        completedSessions
+      );
+      setIsProcessing(false);
+      if (result) {
+        setRefundModal(null);
+        setRefundReason('');
+        setTotalSessions(1);
+        setCompletedSessions(0);
+        showToast('success', `退款申请已提交，应退 ¥${result.refundAmount.toFixed(2)}`);
+      } else {
+        showToast('error', '提交失败，请重试');
+      }
+    } catch {
+      setIsProcessing(false);
       showToast('error', '提交失败，请重试');
     }
   };

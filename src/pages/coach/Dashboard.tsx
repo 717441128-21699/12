@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   Calendar,
   Clock,
@@ -50,11 +50,16 @@ function isWithin30Minutes(course: Course): boolean {
 }
 
 export default function CoachDashboard() {
-  const { courses, createCourse, checkConflict, checkIn } = useCoachStore();
+  const { courses, createCourse, checkConflict, checkIn, fetchCourses, fetchStats } = useCoachStore();
   const { bookings } = useMemberStore();
   const { categories } = useManagerStore();
   const currentUser = useAuthStore((s) => s.currentUser);
   const coachId = currentUser?.id ?? 'coach1';
+
+  useEffect(() => {
+    fetchCourses();
+    fetchStats(coachId);
+  }, []);
 
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);

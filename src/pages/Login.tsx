@@ -29,7 +29,7 @@ export default function Login() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -39,8 +39,8 @@ export default function Login() {
     }
 
     setLoading(true);
-    setTimeout(() => {
-      const success = login(role, phone.trim(), password);
+    try {
+      const success = await login(role, phone.trim(), password);
       setLoading(false);
 
       if (success) {
@@ -54,7 +54,10 @@ export default function Login() {
       } else {
         setError('账号或密码错误，请重试');
       }
-    }, 500);
+    } catch {
+      setLoading(false);
+      setError('登录失败，请重试');
+    }
   };
 
   const fillDemoAccount = (targetRole: UserRole) => {
