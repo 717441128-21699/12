@@ -53,13 +53,16 @@ const tabs: { key: TabKey; label: string; icon: React.ComponentType<{ className?
 
 export default function MyBookings() {
   const currentUser = useAuthStore((s) => s.currentUser);
-  const { bookings, waitingQueues, cancelBooking, applyRefund, refundRequests, fetchBookings, fetchWaitingQueues } = useMemberStore();
-  const { courses } = useCoachStore();
-  const { categories } = useManagerStore();
+  const { bookings, waitingQueues, cancelBooking, applyRefund, refundRequests, fetchBookings, fetchWaitingQueues, fetchRefundRequests } = useMemberStore();
+  const { courses, fetchCourses } = useCoachStore();
+  const { categories, fetchCategories } = useManagerStore();
 
   useEffect(() => {
     fetchBookings();
     fetchWaitingQueues();
+    fetchCourses();
+    fetchCategories();
+    fetchRefundRequests();
   }, []);
 
   const [activeTab, setActiveTab] = useState<TabKey>('booked');
@@ -113,7 +116,7 @@ export default function MyBookings() {
         if (activeTab === 'cancelled') return b.status === 'cancelled' || b.status === 'refunded';
         return false;
       })
-      .sort((a, b) => b.bookedAt.localeCompare(a.bookedAt));
+      .sort((a, b) => (b.bookedAt || '').localeCompare(a.bookedAt || ''));
   }, [myBookings, activeTab]);
 
   const showToast = (type: 'success' | 'error' | 'info', message: string) => {

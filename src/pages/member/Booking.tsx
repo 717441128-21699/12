@@ -41,13 +41,15 @@ function getCategoryIcon(categoryId: string, categories: CourseCategory[]) {
 
 export default function Booking() {
   const currentUser = useAuthStore((s) => s.currentUser);
-  const { bookings, waitingQueues, bookCourse, joinWaiting } = useMemberStore();
+  const { bookings, waitingQueues, bookCourse, joinWaiting, fetchBookings, fetchWaitingQueues } = useMemberStore();
   const { courses, fetchCourses } = useCoachStore();
   const { categories, fetchCategories } = useManagerStore();
 
   useEffect(() => {
     fetchCourses();
     fetchCategories();
+    fetchBookings();
+    fetchWaitingQueues();
   }, []);
 
   const [selectedDate, setSelectedDate] = useState<string>('all');
@@ -84,21 +86,19 @@ export default function Booking() {
     setTimeout(() => setToast(null), 3000);
   };
 
-  const handleBook = (course: Course) => {
-    const result = bookCourse(course.id, courses);
-    if (result) {
+  const handleBook = async (course: Course) => {
+    const result = await bookCourse(course.id, courses);
+    if (result && 'waiting' in result && result.waiting) {
+      showToast('info', `课程已满员，已加入候补队列，第${result.position}位`);
+    } else if (result) {
       showToast('success', `预约成功：${course.title}`);
     } else {
-      if (course.bookedCount >= course.capacity) {
-        showToast('info', '课程已满员，已加入候补队列');
-      } else {
-        showToast('error', '预约失败，请重试');
-      }
+      showToast('error', '预约失败，请重试');
     }
   };
 
-  const handleJoinWaiting = (course: Course) => {
-    const result = joinWaiting(course.id);
+  const handleJoinWaiting = async (course: Course) => {
+    const result = await joinWaiting(course.id);
     if (result) {
       showToast('info', '已加入候补队列');
     } else {

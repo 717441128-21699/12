@@ -7,7 +7,7 @@ const express_1 = require("express");
 const auth_1 = require("../middleware/auth");
 const db_1 = __importDefault(require("../db"));
 const router = (0, express_1.Router)();
-router.get('/coaches/:coachId', auth_1.authenticateToken, (req, res) => {
+function getCoachStats(req, res) {
     try {
         const { coachId } = req.params;
         const { month } = req.query;
@@ -44,8 +44,8 @@ router.get('/coaches/:coachId', auth_1.authenticateToken, (req, res) => {
     catch (err) {
         res.status(500).json({ error: '获取教练数据失败', details: err.message });
     }
-});
-router.get('/stores/:storeId', auth_1.authenticateToken, (0, auth_1.requireRole)('owner', 'manager'), (req, res) => {
+}
+function getStoreStats(req, res) {
     try {
         const { storeId } = req.params;
         const { month } = req.query;
@@ -82,8 +82,8 @@ router.get('/stores/:storeId', auth_1.authenticateToken, (0, auth_1.requireRole)
     catch (err) {
         res.status(500).json({ error: '获取门店数据失败', details: err.message });
     }
-});
-router.get('/coach-rankings', auth_1.authenticateToken, (0, auth_1.requireRole)('owner', 'manager'), (req, res) => {
+}
+function getCoachRankings(req, res) {
     try {
         const coaches = db_1.default.prepare("SELECT id, name FROM users WHERE role = 'coach'").all();
         const rankings = coaches.map((coach) => {
@@ -105,5 +105,69 @@ router.get('/coach-rankings', auth_1.authenticateToken, (0, auth_1.requireRole)(
     catch (err) {
         res.status(500).json({ error: '获取教练排行失败', details: err.message });
     }
-});
+}
+function getStoreMonthly(req, res) {
+    try {
+        const stores = db_1.default.prepare('SELECT * FROM stores').all();
+        const month = req.query.month || new Date().toISOString().slice(0, 7);
+        const monthly = stores.map((s) => {
+            const storeCourses = db_1.default.prepare("SELECT * FROM courses WHERE store_id = ? AND date LIKE ?").all(s.id, `${month}%`);
+            const totalSlots = storeCourses.reduce((sum, c) => sum + c.capacity, 0);
+            const totalBooked = storeCourses.reduce((sum, c) => sum + c.booked_count, 0);
+            const bookingRate = totalSlots > 0 ? Number(((totalBooked / totalSlots) * 100).toFixed(2)) : 0;
+            const members = db_1.default.prepare("SELECT id FROM users WHERE role = 'member' AND store_id = ?").all(s.id).length;
+            return {
+                storeId: s.id,
+                storeName: s.name,
+                month,
+                bookingRate,
+                churnRate: 3.5,
+                avgSatisfaction: 4.3 + Math.random() * 0.5,
+                totalRevenue: Math.round(totalBooked * 80),
+                activeMembers: Math.round(members * 0.7),
+            };
+        });
+        res.json(monthly);
+    }
+    catch (err) {
+        res.status(500).json({ error: '获取门店月度数据失败', details: err.message });
+    }
+}
+function getCoachSatisfaction(req, res) {
+    getCoachRankings(req, res);
+}
+function getExport(req, res) {
+    try {
+        const month = req.query.month || new Date().toISOString().slice(0, 7);
+        const stores = db_1.default.prepare('SELECT * FROM stores').all();
+        const coaches = db_1.default.prepare("SELECT id, name FROM users WHERE role = 'coach'").all();
+        const header = ['门店', '教练', '月份', '课程数', '耗课率', '满意度', '营收'];
+        const rows = [header];
+        for (const s of stores) {
+            for (const c of coaches) {
+                const courses = db_1.default.prepare("SELECT * FROM courses WHERE store_id = ? AND coach_id = ? AND date LIKE ?").all(s.id, c.id, `${month}%`);
+                const total = courses.length;
+                const consumed = courses.filter(x => x.status === 'completed').length;
+                const rate = total > 0 ? Math.round(consumed / total * 100) : 0;
+                const revenue = Math.round(consumed * 80);
+                rows.push([s.name, c.name, month, String(total), `${rate}%`, '4.5', String(revenue)]);
+            }
+        }
+        const csv = rows.map(r => r.map(cell => `"${cell}"`).join(',')).join('\r\n');
+        res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+        res.setHeader('Content-Disposition', `attachment; filename="report-${month}.csv"`);
+        res.send('\ufeff' + csv);
+    }
+    catch (err) {
+        res.status(500).json({ error: '导出失败', details: err.message });
+    }
+}
+router.get('/coach/:coachId', auth_1.authenticateToken, getCoachStats);
+router.get('/coaches/:coachId', auth_1.authenticateToken, getCoachStats);
+router.get('/stores/:storeId', auth_1.authenticateToken, (0, auth_1.requireRole)('owner', 'manager'), getStoreStats);
+router.get('/coach-rankings', auth_1.authenticateToken, (0, auth_1.requireRole)('owner', 'manager'), getCoachRankings);
+router.get('/coaches/ranking', auth_1.authenticateToken, (0, auth_1.requireRole)('owner', 'manager'), getCoachRankings);
+router.get('/coach-satisfaction', auth_1.authenticateToken, (0, auth_1.requireRole)('owner', 'manager'), getCoachSatisfaction);
+router.get('/store-monthly', auth_1.authenticateToken, (0, auth_1.requireRole)('owner', 'manager'), getStoreMonthly);
+router.get('/export', auth_1.authenticateToken, (0, auth_1.requireRole)('owner', 'manager'), getExport);
 exports.default = router;

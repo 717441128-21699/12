@@ -76,14 +76,16 @@ const COLORS = ['#FF5E1A', '#333333'];
 export default function Home() {
   const currentUser = useAuthStore((s) => s.currentUser);
   const { bodyData, dietPlan, bookings, trainingPlan, fetchBookings, fetchWaitingQueues } = useMemberStore();
-  const { courses } = useCoachStore();
-  const { categories } = useManagerStore();
+  const { courses, fetchCourses } = useCoachStore();
+  const { categories, fetchCategories } = useManagerStore();
   const { fetchMessages } = useMessageStore();
 
   useEffect(() => {
     fetchBookings();
     fetchWaitingQueues();
     fetchMessages();
+    fetchCourses();
+    fetchCategories();
   }, []);
 
   const memberLevel = currentUser?.memberLevel || currentUser?.level || 'normal';

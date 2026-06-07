@@ -17,13 +17,11 @@ import { useAuthStore } from '@/store/authStore';
 import { TOKEN_KEY } from '@/api/client';
 
 export default function App() {
-  const fetchMe = useAuthStore((s) => s.fetchMe);
-
   useEffect(() => {
     if (localStorage.getItem(TOKEN_KEY)) {
-      fetchMe();
+      useAuthStore.getState().fetchMe();
     }
-  }, [fetchMe]);
+  }, []);
 
   return (
     <Router>

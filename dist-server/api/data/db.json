@@ -306,7 +306,7 @@
       "start_time": "10:00",
       "end_time": "11:00",
       "capacity": 10,
-      "booked_count": 6,
+      "booked_count": 7,
       "price": 148,
       "status": "scheduled",
       "description": "强化核心肌群，改善体态，提升身体控制能力。",
@@ -467,6 +467,18 @@
       "discount_rate": 0.8,
       "actual_price": 126,
       "attendance": "2026-06-07T03:10:14.566Z",
+      "training_report": null,
+      "booked_at": null
+    },
+    {
+      "id": "mq37u2twggtplp",
+      "member_id": "m1",
+      "course_id": "course5",
+      "status": "booked",
+      "price": 148,
+      "discount_rate": 0.8,
+      "actual_price": 118,
+      "attendance": "2026-06-07T03:21:50.036Z",
       "training_report": null,
       "booked_at": null
     }
@@ -701,6 +713,20 @@
       "has_voucher": 1,
       "voucher_data": "{\"type\":\"booking\",\"bookingId\":\"mq37f67awq4fye\",\"amount\":126,\"issuedAt\":\"2026-06-07T03:10:14.568Z\",\"code\":\"BK1780801814568791\"}",
       "read": "2026-06-07T03:10:14.568Z",
+      "created_at": null
+    },
+    {
+      "id": "mq37u2tyrfa4a4",
+      "user_id": "m1",
+      "role": "member",
+      "type": "booking_success",
+      "title": "预约成功",
+      "content": "您已成功预约「普拉提核心训练」课程，上课时间 2026-06-09 10:00-11:00，请准时到店。",
+      "related_id": "mq37u2twggtplp",
+      "related_type": "booking",
+      "has_voucher": 1,
+      "voucher_data": "{\"type\":\"booking\",\"bookingId\":\"mq37u2twggtplp\",\"amount\":118,\"issuedAt\":\"2026-06-07T03:21:50.038Z\",\"code\":\"BK178080251003858\"}",
+      "read": "2026-06-07T03:21:50.038Z",
       "created_at": null
     }
   ]

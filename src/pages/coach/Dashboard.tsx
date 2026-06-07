@@ -51,14 +51,16 @@ function isWithin30Minutes(course: Course): boolean {
 
 export default function CoachDashboard() {
   const { courses, createCourse, checkConflict, checkIn, fetchCourses, fetchStats } = useCoachStore();
-  const { bookings } = useMemberStore();
-  const { categories } = useManagerStore();
+  const { bookings, fetchBookings } = useMemberStore();
+  const { categories, fetchCategories } = useManagerStore();
   const currentUser = useAuthStore((s) => s.currentUser);
   const coachId = currentUser?.id ?? 'coach1';
 
   useEffect(() => {
     fetchCourses();
     fetchStats(coachId);
+    fetchBookings();
+    fetchCategories();
   }, []);
 
   const [showCreateModal, setShowCreateModal] = useState(false);
